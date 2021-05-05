@@ -5,11 +5,12 @@ to grayscale, and attempts to detect the apriltag in it. Depends on opencv.
 
 // g++ $(pkg-config --cflags --libs opencv4) -std=c++11  main.cpp
 
-#include <iostream>
 #include <opencv2/core.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+
+#include "apriltags-utils.h"
 
 using namespace std;
 using namespace cv;
@@ -31,9 +32,6 @@ int main() {
 
     // Initialize raw image matrix
     rawImg = new unsigned char*[height];
-    // for (int col = 0; col < height; col++) {
-    //     rawImg[col] = new unsigned char[width];
-    // }
 
     // Handle frame
     while (true)
@@ -57,6 +55,11 @@ int main() {
         if (waitKey(5) >= 0)
             break;
     }
+
+    unsigned char* fImg = detect(rawImg, width, height);
+
+    // std::cout << map(12, -1020, 1020, 0, 255) << std::endl;
+    std::cout << "\nend\n";
 
     return 0;
 }
